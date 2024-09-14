@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +27,17 @@ public class Page3Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        String origin = Page3FragmentArgs.fromBundle(getArguments()).getOrigin();
+        Log.d("TAG", "Page3Fragment接受到的数据: "+origin);
+
         Button btn_page3=view.findViewById(R.id.btn_page3);
         btn_page3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_page3Fragment_to_page2Fragment);
+                Page3FragmentDirections.ActionPage3FragmentToPage2Fragment action = Page3FragmentDirections.actionPage3FragmentToPage2Fragment();
+                action.setOrigin("从Page3页面传递过来的");
+                Navigation.findNavController(view).navigate(action);
             }
         });
     }
